@@ -3,7 +3,7 @@ from langchain.llms import OpenAI
 from langchain import PromptTemplate
 import os
 
-os.environ['OPENAI_API_KEY'] = openai_apikey
+
 
 template = """
 
@@ -37,6 +37,8 @@ st.set_page_config(page_title='BestieAI', page_icon='🤖', layout='wide')
 st.header('BestieAI 😎')
 st.write('Shopping made easy for the busy!')
 st.write('---')
+
+os.environ['OPENAI_API_KEY'] = st.text_area(label="", placeholder="Type OpenAI API key...", key='input_text', height=50)
 
 _,_,_,_, col5 = st.columns(5)
 
