@@ -1,14 +1,42 @@
+from apikey import openai_apikey
 import streamlit as st
+from langchain.llms import OpenAI
+from langchain import PromptTemplate
 import os
-from llm import get_llm
+
+os.environ['OPENAI_API_KEY'] = openai_apikey
+
+template = """
+
+You are a helpful chatbot and act like a salesman to find the best option for your user.
+Your goal is:
+-to understand what your user wants to purchase with the desired price range,
+-search for the best options for your user,
+-narrow down the best options to 3 items,
+-list the all without any further question to your user,
+-ask your user's permission to purchase the one indicated by the user.
+
+Your user tells you:
+REQUEST: {item}
+PRICE RANGE: \${price[0]} to \${price[1]}.
+
+YOUR RESPONSE:
+"""
+
+prompt = PromptTemplate(
+    input_variables=['item', 'price'],
+    template=template,
+)
+
+def load_llm():
+    llm = OpenAI(temperature=0.2)
+    return llm
+
+llm = load_llm()
 
 st.set_page_config(page_title='BestieAI', page_icon='🤖', layout='wide')
 st.header('BestieAI 😎')
 st.write('Shopping made easy for the busy!')
-st.write('---')
-
-openai_apikey = st.text_area(label="", placeholder="Type your OpenAI API key...", key='api_text', height=10)
-
 st.write('---')
 
 _,_,_,_, col5 = st.columns(5)
@@ -26,8 +54,8 @@ def get_info():
 item, price = get_info()
 
 if st.button('🔍 Search...'):
-    
-    response = get_llm(openai_apikey, item, price)
+    item_prompt = prompt.format(item=item, price=price)
+    searched_item = llm(item_prompt)
     st.write('---')
     st.write("Bestie's Response:")
-    st.write(response)
+    st.write(searched_item)
