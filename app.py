@@ -7,14 +7,11 @@ st.header('BestieAI 😎')
 st.write('Shopping made easy for the busy!')
 st.write('---')
 
-col1,_,_,_, col5 = st.columns(5)
-
-with col1:
-    openai_apikey = st.text_area(label="", placeholder="Type your OpenAI API key...", key='api_text', height=10)
+openai_apikey = st.text_area(label="", placeholder="Type your OpenAI API key...", key='api_text', height=10)
 
 st.write('---')
 
-
+_,_,_,_, col5 = st.columns(5)
 
 with col5:
     st.button('## 📦 Shopping Cart')
