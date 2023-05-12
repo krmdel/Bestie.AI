@@ -3,7 +3,7 @@ from langchain.llms import OpenAI
 from langchain import PromptTemplate
 import os
 
-os.environ["OPENAI_API_KEY"] == st.secrets["openai_apikey"]
+os.environ["OPENAI_API_KEY"] == st.secrets["OPENAI_API_KEY"]
 
 template = """
 
