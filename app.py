@@ -1,10 +1,9 @@
-from apikey import openai_apikey
 import streamlit as st
 from langchain.llms import OpenAI
 from langchain import PromptTemplate
 import os
 
-os.environ['OPENAI_API_KEY'] = openai_apikey
+os.environ["OPENAI_API_KEY"] == st.secrets["openai_apikey"]
 
 template = """
 
